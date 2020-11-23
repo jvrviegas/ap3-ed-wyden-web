@@ -83,44 +83,47 @@ export default function Dashboard({ history }) {
             </tr>
           </thead>
           <tbody>
-            {products.map((product) => (
-              <tr key={product.id}>
-                <td>#{product.id < 10 ? `0${product.id}` : product.id}</td>
-                <td>{product.name}</td>
-                <td>{format(parseISO(product.expiring_date), 'dd/MM/yyyy')}</td>
-                <td>{product.lote}</td>
-                <td>
-                  <Status status={product.status.id}>
-                    <Badge status={product.status.id} />
-                    <span>{product.status.name}</span>
-                  </Status>
-                </td>
-                <td style={{ textAlign: 'center' }}>
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      flex: 1,
-                    }}
-                  >
-                    <ActionButton
-                      type="button"
-                      onClick={() => addToQueue(product)}
+            {products &&
+              products.map((product) => (
+                <tr key={product.id}>
+                  <td>#{product.id < 10 ? `0${product.id}` : product.id}</td>
+                  <td>{product.name}</td>
+                  <td>
+                    {format(parseISO(product.expiring_date), 'dd/MM/yyyy')}
+                  </td>
+                  <td>{product.lote}</td>
+                  <td>
+                    <Status status={product.status.id}>
+                      <Badge status={product.status.id} />
+                      <span>{product.status.name}</span>
+                    </Status>
+                  </td>
+                  <td style={{ textAlign: 'center' }}>
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        flex: 1,
+                      }}
                     >
-                      <MdAdd size={16} color="#2CA42B" />
-                      <span>Adicionar à lista</span>
-                    </ActionButton>
-                    <ActionButton
-                      type="button"
-                      onClick={() => handleDelete(product.id)}
-                    >
-                      <MdDeleteForever size={16} color="#DE3B3B" />
-                      <span>Excluir</span>
-                    </ActionButton>
-                  </div>
-                </td>
-              </tr>
-            ))}
+                      <ActionButton
+                        type="button"
+                        onClick={() => addToQueue(product)}
+                      >
+                        <MdAdd size={16} color="#2CA42B" />
+                        <span>Adicionar à lista</span>
+                      </ActionButton>
+                      <ActionButton
+                        type="button"
+                        onClick={() => handleDelete(product.id)}
+                      >
+                        <MdDeleteForever size={16} color="#DE3B3B" />
+                        <span>Excluir</span>
+                      </ActionButton>
+                    </div>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       )}

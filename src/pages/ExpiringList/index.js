@@ -75,19 +75,20 @@ export default function ExpiringList() {
             </tr>
           </thead>
           <tbody>
-            {queues.map((queue) => (
-              <tr key={queue.id}>
-                <td>#{queue.id < 10 ? `0${queue.id}` : queue.id}</td>
-                <td>{queue.product.name}</td>
-                <td>{format(parseISO(queue.expiring_date), 'dd/MM/yyyy')}</td>
-                <td>
-                  <Status status={queue.status.id}>
-                    <Badge status={queue.status.id} />
-                    <span>{queue.status.name}</span>
-                  </Status>
-                </td>
-              </tr>
-            ))}
+            {queues &&
+              queues.map((queue) => (
+                <tr key={queue.id}>
+                  <td>#{queue.id < 10 ? `0${queue.id}` : queue.id}</td>
+                  <td>{queue.product.name}</td>
+                  <td>{format(parseISO(queue.expiring_date), 'dd/MM/yyyy')}</td>
+                  <td>
+                    <Status status={queue.status.id}>
+                      <Badge status={queue.status.id} />
+                      <span>{queue.status.name}</span>
+                    </Status>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       )}

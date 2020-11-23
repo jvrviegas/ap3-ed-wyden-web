@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect, useCallback } from 'react';
 import { format, parseISO } from 'date-fns';
@@ -7,12 +8,12 @@ import { toast } from 'react-toastify';
 
 import LoadingSpinner from '~/components/LoadingSpinner';
 
-import { Status, Badge, DeleteButton } from './styles';
+import { Status, Badge } from './styles';
 
 import api from '~/services/api';
 import orderStatus from '~/utils/orderStatus';
 
-export default function ExpiringList({ history }) {
+export default function ExpiringList() {
   const [queues, setQueues] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -74,15 +75,15 @@ export default function ExpiringList({ history }) {
             </tr>
           </thead>
           <tbody>
-            {queues.map((queues) => (
-              <tr key={queues.id}>
-                <td>#{queues.id < 10 ? `0${queues.id}` : queues.id}</td>
-                <td>{queues.product.name}</td>
-                <td>{format(parseISO(queues.expiring_date), 'dd/MM/yyyy')}</td>
+            {queues.map((queue) => (
+              <tr key={queue.id}>
+                <td>#{queue.id < 10 ? `0${queue.id}` : queue.id}</td>
+                <td>{queue.product.name}</td>
+                <td>{format(parseISO(queue.expiring_date), 'dd/MM/yyyy')}</td>
                 <td>
-                  <Status status={queues.status.id}>
-                    <Badge status={queues.status.id} />
-                    <span>{queues.status.name}</span>
+                  <Status status={queue.status.id}>
+                    <Badge status={queue.status.id} />
+                    <span>{queue.status.name}</span>
                   </Status>
                 </td>
               </tr>

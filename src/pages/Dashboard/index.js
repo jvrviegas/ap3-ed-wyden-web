@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect, useCallback } from 'react';
 import { format, parseISO } from 'date-fns';
@@ -68,62 +69,58 @@ export default function Dashboard({ history }) {
         </button>
       </div>
 
-      {loading ? (
-        <LoadingSpinner />
-      ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Produto</th>
-              <th>Data de validade</th>
-              <th>Lote</th>
-              <th>Estado</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.map((product) => (
-              <tr key={product.id}>
-                <td>#{product.id < 10 ? `0${product.id}` : product.id}</td>
-                <td>{product.name}</td>
-                <td>{format(parseISO(product.expiring_date), 'dd/MM/yyyy')}</td>
-                <td>{product.lote}</td>
-                <td>
-                  <Status status={product.status.id}>
-                    <Badge status={product.status.id} />
-                    <span>{product.status.name}</span>
-                  </Status>
-                </td>
-                <td style={{ textAlign: 'center' }}>
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      flex: 1,
-                    }}
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Produto</th>
+            <th>Data de validade</th>
+            <th>Lote</th>
+            <th>Estado</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {products.map((product) => (
+            <tr key={product.id}>
+              <td>#{product.id < 10 ? `0${product.id}` : product.id}</td>
+              <td>{product.name}</td>
+              <td>{format(parseISO(product.expiring_date), 'dd/MM/yyyy')}</td>
+              <td>{product.lote}</td>
+              <td>
+                <Status status={product.status.id}>
+                  <Badge status={product.status.id} />
+                  <span>{product.status.name}</span>
+                </Status>
+              </td>
+              <td style={{ textAlign: 'center' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    flex: 1,
+                  }}
+                >
+                  <ActionButton
+                    type="button"
+                    onClick={() => addToQueue(product)}
                   >
-                    <ActionButton
-                      type="button"
-                      onClick={() => addToQueue(product)}
-                    >
-                      <MdAdd size={16} color="#2CA42B" />
-                      <span>Adicionar à lista</span>
-                    </ActionButton>
-                    <ActionButton
-                      type="button"
-                      onClick={() => handleDelete(product.id)}
-                    >
-                      <MdDeleteForever size={16} color="#DE3B3B" />
-                      <span>Excluir</span>
-                    </ActionButton>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+                    <MdAdd size={16} color="#2CA42B" />
+                    <span>Adicionar à lista</span>
+                  </ActionButton>
+                  <ActionButton
+                    type="button"
+                    onClick={() => handleDelete(product.id)}
+                  >
+                    <MdDeleteForever size={16} color="#DE3B3B" />
+                    <span>Excluir</span>
+                  </ActionButton>
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </>
   );
 }

@@ -52,18 +52,3 @@ export const Badge = styled.span`
     border-radius: 50%;
   }
 `;
-
-export const DeleteButton = styled.button`
-  width: 100%;
-  display: flex;
-  border: 0;
-  background: transparent;
-  text-align: left;
-  font-size: 16px;
-  color: #999;
-  padding: 10px 0;
-
-  svg {
-    margin-right: 5px;
-  }
-`;

@@ -1,7 +1,7 @@
 ## :computer: Iniciando a aplicação
 
-1. Clone o repositório com `git clone https://github.com/jvrviegas/fastfeet-web.git`
-2. Entre na pasta do projeto com `cd fastfeet-web`
+1. Clone o repositório com `git clone https://github.com/jvrviegas/ap3-ed-wyden.git`
+2. Entre na pasta do projeto com `cd ap3-ed-wyden`
 3. Instale todas as dependencias com o comando `yarn`
 4. Digite `yarn start` para iniciar a aplicação
 5. Acessar o endereço `http://localhost:3000`

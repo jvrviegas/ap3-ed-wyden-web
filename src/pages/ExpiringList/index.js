@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 import { MdDeleteForever } from 'react-icons/md';
 import { toast } from 'react-toastify';
 
+import LoadingSpinner from '~/components/LoadingSpinner';
+
 import { Status, Badge } from './styles';
 
 import api from '~/services/api';
@@ -13,8 +15,11 @@ import orderStatus from '~/utils/orderStatus';
 
 export default function ExpiringList() {
   const [queues, setQueues] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const loadOrders = useCallback(async () => {
+    setLoading(true);
+
     const response = await api.get(`/queue/list`);
 
     const data = response.data.map((order) => ({
@@ -24,6 +29,7 @@ export default function ExpiringList() {
     console.tron.log(data);
 
     setQueues(data);
+    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -56,31 +62,35 @@ export default function ExpiringList() {
         </div>
       )}
 
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Produto</th>
-            <th>Data de validade</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {queues.map((queue) => (
-            <tr key={queue.id}>
-              <td>#{queue.id < 10 ? `0${queue.id}` : queue.id}</td>
-              <td>{queue.product.name}</td>
-              <td>{format(parseISO(queue.expiring_date), 'dd/MM/yyyy')}</td>
-              <td>
-                <Status status={queue.status.id}>
-                  <Badge status={queue.status.id} />
-                  <span>{queue.status.name}</span>
-                </Status>
-              </td>
+      {loading ? (
+        <LoadingSpinner />
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Produto</th>
+              <th>Data de validade</th>
+              <th>Status</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {queues.map((queue) => (
+              <tr key={queue.id}>
+                <td>#{queue.id < 10 ? `0${queue.id}` : queue.id}</td>
+                <td>{queue.product.name}</td>
+                <td>{format(parseISO(queue.expiring_date), 'dd/MM/yyyy')}</td>
+                <td>
+                  <Status status={queue.status.id}>
+                    <Badge status={queue.status.id} />
+                    <span>{queue.status.name}</span>
+                  </Status>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </>
   );
 }

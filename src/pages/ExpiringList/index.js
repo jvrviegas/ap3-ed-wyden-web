@@ -6,8 +6,6 @@ import PropTypes from 'prop-types';
 import { MdDeleteForever } from 'react-icons/md';
 import { toast } from 'react-toastify';
 
-import LoadingSpinner from '~/components/LoadingSpinner';
-
 import { Status, Badge } from './styles';
 
 import api from '~/services/api';
@@ -15,11 +13,8 @@ import orderStatus from '~/utils/orderStatus';
 
 export default function ExpiringList() {
   const [queues, setQueues] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   const loadOrders = useCallback(async () => {
-    setLoading(true);
-
     const response = await api.get(`/queue/list`);
 
     const data = response.data.map((order) => ({
@@ -29,7 +24,6 @@ export default function ExpiringList() {
     console.tron.log(data);
 
     setQueues(data);
-    setLoading(false);
   }, []);
 
   useEffect(() => {

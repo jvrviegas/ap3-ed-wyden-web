@@ -6,8 +6,6 @@ import PropTypes from 'prop-types';
 import { MdAdd, MdDeleteForever } from 'react-icons/md';
 import { toast } from 'react-toastify';
 
-import LoadingSpinner from '~/components/LoadingSpinner';
-
 import { Status, Badge, ActionButton } from './styles';
 
 import api from '~/services/api';
@@ -15,11 +13,8 @@ import orderStatus from '~/utils/orderStatus';
 
 export default function Dashboard({ history }) {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   const loadOrders = useCallback(async () => {
-    setLoading(true);
-
     const response = await api.get(`/products/list`);
 
     const data = response.data.map((product) => ({
@@ -28,7 +23,6 @@ export default function Dashboard({ history }) {
     }));
 
     setProducts(data);
-    setLoading(false);
   }, []);
 
   useEffect(() => {

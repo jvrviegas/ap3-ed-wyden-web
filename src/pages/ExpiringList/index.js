@@ -26,7 +26,6 @@ export default function ExpiringList() {
       ...order,
       status: orderStatus(order),
     }));
-    console.tron.log(data);
 
     setQueues(data);
     setLoading(false);
